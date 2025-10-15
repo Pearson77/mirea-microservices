@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 
 router = APIRouter(
     prefix="/order-items",
@@ -16,6 +16,6 @@ async def get_order_items(order_id: int):
     ...
 
 
-@router.delete("/{order_id}/item/{item_id}")
-async def remove_item_from_order(order_id: int, item_id: int):
+@router.delete("/{order_id}")
+async def remove_item_from_order(order_id: int, item_id: int = Body(..., title="item id")):
     ...
