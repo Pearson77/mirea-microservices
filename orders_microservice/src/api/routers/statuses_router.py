@@ -6,6 +6,16 @@ router = APIRouter(
 )
 
 
-@router.get("/statuses")
+@router.post("")
+async def create_status():
+    ...
+
+
+@router.get("")
 async def get_statuses():
+    ...
+
+
+@router.delete("/{status_id}")
+async def delete_status(status_id: int):
     ...
