@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
-from src.api.dependencies import get_orders_service
-from src.services.orders_service import OrdersService
+from src.api.dependencies import get_statuses_service
+from src.services.statuses_service import StatusesService
 
 router = APIRouter(
     prefix="/statuses",
@@ -12,14 +12,14 @@ router = APIRouter(
 @router.post("")
 async def create_status(
         title: str,
-        service: OrdersService = Depends(get_orders_service),
+        service: StatusesService = Depends(get_statuses_service),
 ):
     return await service.create_status(title)
 
 
 @router.get("")
 async def get_statuses(
-        service: OrdersService = Depends(get_orders_service),
+        service: StatusesService = Depends(get_statuses_service),
 ):
     return await service.get_statuses()
 
@@ -27,6 +27,6 @@ async def get_statuses(
 @router.delete("/{status_id}")
 async def delete_status(
         status_id: int,
-        service: OrdersService = Depends(get_orders_service),
+        service: StatusesService = Depends(get_statuses_service),
 ):
     return await service.delete_status(status_id)

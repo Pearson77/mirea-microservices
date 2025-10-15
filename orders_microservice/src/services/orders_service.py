@@ -1,7 +1,7 @@
 from sqlalchemy.testing.pickleable import Order
 
 from src.repositories.items_repository import ItemsRepository
-from src.repositories.orders_items_repository import OrderItemsRepository
+from src.repositories.orders_items_repository import OrdersItemsRepository
 from src.repositories.orders_repository import OrdersRepository
 from src.repositories.statuses_repository import StatusesRepository
 
