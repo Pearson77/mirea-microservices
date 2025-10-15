@@ -1,3 +1,5 @@
+from sqlalchemy.testing.pickleable import Order
+
 from src.repositories.items_repository import ItemsRepository
 from src.repositories.orders_items_repository import OrderItemsRepository
 from src.repositories.orders_repository import OrdersRepository
@@ -7,27 +9,21 @@ from src.repositories.statuses_repository import StatusesRepository
 class OrdersService:
     def __init__(
             self,
-            orders_repo: OrdersRepository,
-            order_items_repo: OrderItemsRepository,
-            items_repo: ItemsRepository,
-            statuses_repo: StatusesRepository,
+            repository: OrdersRepository,
     ):
-        self.orders_repo = orders_repo
-        self.order_items_repo = order_items_repo
-        self.items_repo = items_repo
-        self.statuses_repo = statuses_repo
+        self.repository = repository
 
-    # Заказы
+    async def get_orders(self):
+        ...
 
-    # Товары заказа
+    async def get_order(self, order_id: int):
+        ...
 
-    # Товары
+    async def create_order(self):
+        ...
 
-    async def get_statuses(self):
-        return await self.statuses_repo.read_statuses()
+    async def update_order(self, order_id: int):
+        ...
 
-    async def create_status(self, title: str):
-        return await self.statuses_repo.create_status(title)
-
-    async def delete_status(self, status_id: int):
-        return await self.statuses_repo.delete_status(status_id)
+    async def delete_order(self, order_id: int):
+        ...
