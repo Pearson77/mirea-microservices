@@ -15,7 +15,7 @@ async def add_item_to_order(
         item: AddItemSchema,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.add_item_to_order(item.order_id, item.item_id)
+    return await service.add_item_to_order(item.order_id, item.item_id, item.count)
 
 
 @router.get("/{order_id}")

@@ -17,13 +17,14 @@ class OrdersItemsRepository:
             return result.scalars().all()
 
     @staticmethod
-    async def add_item_to_order(order_id: int, item_id: int):
+    async def add_item_to_order(order_id: int, item_id: int, count: int):
         async with async_session_maker() as session:
             result = await session.execute(
                 insert(OrdersItems)
                 .values(
                     order_id=order_id,
                     item_id=item_id,
+                    count=count,
                 )
                 .returning(OrdersItems)
             )

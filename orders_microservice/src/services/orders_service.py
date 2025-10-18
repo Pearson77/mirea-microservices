@@ -32,8 +32,8 @@ class OrdersService:
     async def get_order_items(self, order_id: int):
         return await self.orders_items_repository.get_order_items(order_id)
 
-    async def add_item_to_order(self, order_id: int, item_id: int):
-        return await self.orders_items_repository.add_item_to_order(order_id, item_id)
+    async def add_item_to_order(self, order_id: int, item_id: int, count: int):
+        return await self.orders_items_repository.add_item_to_order(order_id, item_id, count)
 
     async def remove_item_from_order(self, order_id: int, item_id: int):
         return await self.orders_items_repository.remove_item_from_order(order_id, item_id)
