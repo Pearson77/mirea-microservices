@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, Body
 
-from src.api.dependencies import get_orders_items_service
-from src.services.orders_items_service import OrdersItemsService
+from src.api.dependencies import get_orders_service
+from src.schemas.order_items_schema import RemoveItemSchema, AddItemSchema
+from src.services.orders_service import OrdersService
 
 router = APIRouter(
     prefix="/order-items",
@@ -11,23 +12,24 @@ router = APIRouter(
 
 @router.post("")
 async def add_item_to_order(
-        service: OrdersItemsService = Depends(get_orders_items_service),
+        item: AddItemSchema,
+        service: OrdersService = Depends(get_orders_service),
 ):
-    ...
+    return await service.add_item_to_order(item.order_id, item.item_id)
 
 
 @router.get("/{order_id}")
 async def get_order_items(
         order_id: int,
-        service: OrdersItemsService = Depends(get_orders_items_service),
+        service: OrdersService = Depends(get_orders_service),
 ):
-    ...
+    return await service.get_order_items(order_id)
 
 
 @router.delete("/{order_id}")
 async def remove_item_from_order(
         order_id: int,
-        item_id: int = Body(..., title="item id"),
-        service: OrdersItemsService = Depends(get_orders_items_service),
+        item: RemoveItemSchema,
+        service: OrdersService = Depends(get_orders_service),
 ):
-    ...
+    return await service.remove_item_from_order(order_id, item.item_id)
