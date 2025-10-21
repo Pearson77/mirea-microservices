@@ -14,7 +14,7 @@ class OrdersItemsRepository:
                 .where(OrdersItems.order_id == order_id)
             )
             await session.commit()
-            return result.scalars().all()
+            return result.scalars().all() or []
 
     @staticmethod
     async def add_item_to_order(order_id: int, item_id: int, count: int):

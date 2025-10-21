@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from src.api.dependencies import get_statuses_service
 from src.services.statuses_service import StatusesService
@@ -29,4 +29,6 @@ async def delete_status(
         status_id: int,
         service: StatusesService = Depends(get_statuses_service),
 ):
-    return await service.delete_status(status_id)
+    if result := await service.delete_status(status_id):
+        return result
+    raise HTTPException(status_code=404, detail="Status not found")

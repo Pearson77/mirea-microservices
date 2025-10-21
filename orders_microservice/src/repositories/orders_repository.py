@@ -25,7 +25,7 @@ class OrdersRepository:
                 select(Orders)
             )
             await session.commit()
-            return result.scalars().all()
+            return result.scalars().all() or []
 
     @staticmethod
     async def get_order(order_id: int):

@@ -24,7 +24,7 @@ class StatusesRepository:
                 select(Statuses)
             )
             await session.commit()
-            return result.scalars().all()
+            return result.scalars().all() or []
 
     @staticmethod
     async def delete_status(status_id: int):

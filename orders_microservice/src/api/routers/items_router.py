@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from src.api.dependencies import get_items_service
 from src.schemas.items_schemas import CreateItemSchema
@@ -30,4 +30,6 @@ async def delete_item(
         item_id: int,
         service: ItemsService = Depends(get_items_service),
 ):
-    return await service.delete_item(item_id)
+    if result := await service.delete_item(item_id):
+        return result
+    raise HTTPException(status_code=404, detail="Item not found")

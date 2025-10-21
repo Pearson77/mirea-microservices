@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Body
+from fastapi import APIRouter, Depends, Body, HTTPException
 
 from src.api.dependencies import get_orders_service
 from src.schemas.order_items_schema import RemoveItemSchema, AddItemSchema
@@ -15,7 +15,9 @@ async def add_item_to_order(
         item: AddItemSchema,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.add_item_to_order(item.order_id, item.item_id, item.count)
+    if result := await service.add_item_to_order(item.order_id, item.item_id, item.count):
+        return result
+    raise HTTPException(status_code=404, detail="Item or order not found")
 
 
 @router.get("/{order_id}")
@@ -32,4 +34,6 @@ async def remove_item_from_order(
         item: RemoveItemSchema,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.remove_item_from_order(order_id, item.item_id)
+    if result := await service.remove_item_from_order(order_id, item.item_id):
+        return result
+    raise HTTPException(status_code=404, detail="Item or order not found")

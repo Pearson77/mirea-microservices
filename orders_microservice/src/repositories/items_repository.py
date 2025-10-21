@@ -24,7 +24,7 @@ class ItemsRepository:
                 select(Items)
             )
             await session.commit()
-            return result.scalars().all()
+            return result.scalars().all() or []
 
     @staticmethod
     async def delete_item(item_id: int):

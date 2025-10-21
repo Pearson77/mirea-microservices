@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from src.api.dependencies import get_orders_service
 from src.schemas.orders_schemas import OrderUpdateSchema, OrderCreateSchema
@@ -15,7 +15,9 @@ async def create_order(
         new_order: OrderCreateSchema,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.create_order(new_order)
+    if result := await service.create_order(new_order):
+        return result
+    raise HTTPException(status_code=404, detail="Status not found")
 
 
 @router.get("")
@@ -39,7 +41,9 @@ async def update_order(
         new_order: OrderUpdateSchema,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.update_order(order_id, new_order)
+    if result := await service.update_order(order_id, new_order):
+        return result
+    raise HTTPException(status_code=404, detail="Order or status not found")
 
 
 @router.delete("/{order_id}")
@@ -47,4 +51,6 @@ async def delete_order(
         order_id: int,
         service: OrdersService = Depends(get_orders_service),
 ):
-    return await service.delete_order(order_id)
+    if result := await service.delete_order(order_id):
+        return result
+    raise HTTPException(status_code=404, detail="Order not found")
